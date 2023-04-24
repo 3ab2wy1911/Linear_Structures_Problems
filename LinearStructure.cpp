@@ -701,6 +701,7 @@ public:
         cout<<"[ ";
         while(front != NULL){
             cout<<front->item<<' ';
+            front = front->next;
         }
         cout<<']';
     }
