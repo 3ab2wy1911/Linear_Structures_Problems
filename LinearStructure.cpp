@@ -684,7 +684,7 @@ public:
 //________________________________________________________________
     type first(){
         if (isEmpty())
-            throw out_of_range("List is empty");
+            throw out_of_range("Queue is empty");
         return front->item;
     }
 //________________________________________________________________
@@ -698,10 +698,11 @@ public:
     }
 //________________________________________________________________
     void print(){
+        node *node = front;
         cout<<"[ ";
-        while(front != NULL){
-            cout<<front->item<<' ';
-            front = front->next;
+        while(node != NULL){
+            cout<<node->item<<' ';
+            node = node->next;
         }
         cout<<']';
     }

@@ -84,9 +84,34 @@ public:
     }
 };
 //________________________________________________________________
-template<typename type>
-void Queue_sort(Queue<type> q){
-
+//3. 3. Sorting a Queue.
+void Queue_sort(Queue<int> &q){
+    Queue<int>temp_q , Final_q;
+    int n = q.queueSize();
+    for(int i=0; i<n; i++){
+        int mini = INT_MAX , index =-1 , mini_index=-1;
+        while(!q.isEmpty()){
+            index++;
+            if(mini>q.first()){
+                mini = q.first();
+                mini_index = index;
+            }
+            temp_q.enqueue(q.dequeue());
+        }
+        int j=0;
+        while(!temp_q.isEmpty()){
+            if (j==mini_index)
+            {
+                Final_q.enqueue(temp_q.dequeue());
+            }
+            else
+            {
+                q.enqueue(temp_q.dequeue());
+            }
+            j++;
+        }
+    }
+    q=Final_q;
 }
 //============================================================================
 int main() {
@@ -109,8 +134,10 @@ cout<<"====================================================================\n";
     Longest_Valid_Parentheses(str2);
     cout<<"input : "<< str3<<"\noutput:";
     Longest_Valid_Parentheses(str3);
+    cout<<"________________________________________________________________\n";
     cout<<"================================================================\n";
 ////===============================================================
+//Test cases of Queue problems
     cout<<"Test cases of Queue problems:\n";
     cout<<"================================================================\n";
 //2.Test cases of Implement a Stack problem
@@ -126,5 +153,33 @@ cout<<"====================================================================\n";
     cout << stackUsingQueue.top() << endl; //5
     stackUsingQueue.pop();  //5
     cout << stackUsingQueue.top() << endl;  //4
+    cout<<"________________________________________________________________\n";
 //________________________________________________________________
+//3.Test cases of Sorting a Queue
+    cout<<"3.Test cases of Sorting a Queue:\n";
+    cout<<"________________________________________________________________\n";
+    Queue<int>q1,q2;
+    q1.enqueue(15);
+    q1.enqueue(2);
+    q1.enqueue(4);
+    q2.enqueue(9);
+    q2.enqueue(1);
+    q2.enqueue(2);
+    q2.enqueue(1);
+    cout<<"First Queue before sorting:";
+    q1.print();
+    cout<<endl;
+    cout<<"First Queue after sorting: ";
+    Queue_sort(q1);
+    q1.print();
+    cout<<endl;
+    cout<<"----------------------------------------------------------------\n";
+    cout<<"Second Queue before sorting:";
+    q2.print();
+    cout<<endl;
+    cout<<"Second Queue after sorting:";
+    Queue_sort(q2);
+    q2.print();
+    cout<<endl;
+    cout<<"________________________________________________________________\n";
 }
