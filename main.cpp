@@ -10,13 +10,11 @@ void function1()
 //________________________________________________________________
 void function2()
 {
-
 }
 //============================================================================
 // Problems of Stack
  void function3()
 {
-
 }
 //________________________________________________________________
 //2. Longest Valid Parentheses
@@ -43,9 +41,29 @@ void function5()
 }
 //============================================================================
 // Problems of Queue
-void function6()
+// 1. Generate Binary Numbers from 1 to N
+void BinaryNumbers(int n)
 {
-
+    for(int i = 1; i <=n;i++){
+        Queue<int> q,t_q;
+        int k=i;
+        while(k){
+            t_q.enqueue(k%2);
+            while(!q.isEmpty()){
+                t_q.enqueue(q.dequeue());
+            }
+            q=t_q;
+            while(!t_q.isEmpty()){
+                t_q.dequeue();
+            }
+            k/=2;
+        }
+        while(!q.isEmpty()){
+            cout<<q.dequeue();
+        }
+        cout<<' ';
+    }
+    cout<<endl;
 }
 //________________________________________________________________
 // 2. Implement a Stack
@@ -58,8 +76,7 @@ public:
     void push(type element){
             q2.enqueue(element);
             while(!q1.isEmpty()){
-                q2.enqueue(q1.first());
-                q1.dequeue();
+                q2.enqueue(q1.dequeue());
             }
             q1=q2;
             while(!q2.isEmpty()){
@@ -136,10 +153,21 @@ cout<<"====================================================================\n";
     Longest_Valid_Parentheses(str3);
     cout<<"________________________________________________________________\n";
     cout<<"================================================================\n";
-////===============================================================
+//===============================================================
 //Test cases of Queue problems
     cout<<"Test cases of Queue problems:\n";
     cout<<"================================================================\n";
+//________________________________________________________________
+// 1. Generate Binary Numbers from 1 to N
+    cout<<"1. Test cases of Generate Binary Numbers from 1 to N Problem:\n";
+    cout<<"________________________________________________________________\n";
+    cout<<"Binary numbers till 3:\n";
+    BinaryNumbers(3);
+    cout<<"----------------------------------------------------------------\n";
+    cout<<"Binary numbers till 5:\n";
+    BinaryNumbers(5);
+    cout<<"________________________________________________________________\n";
+//________________________________________________________________
 //2.Test cases of Implement a Stack problem
     cout<<"2.Test cases of Implement a Stack problem:\n";
     cout<<"________________________________________________________________\n";
