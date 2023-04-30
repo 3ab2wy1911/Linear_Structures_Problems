@@ -13,8 +13,48 @@ void function2()
 }
 //============================================================================
 // Problems of Stack
- void function3()
-{
+// 2.infix 2 Postfix
+int operatorPrec(char op) {
+	if (op == '^')
+		return 3;
+	else if (op == '/' or op == '*')
+		return 2;
+	else if (op == '+' or op == '-')
+		return 1;
+	else
+		return 0;
+}
+string infixToPostfix(string infix) {
+	Stack<char> st;
+	string postfix = "";
+	for (int i = 0; i < infix.size(); i++) {
+		if (isalpha(infix[i]) or (infix[i] >= '0' and infix[i] <= '9')) {
+			postfix += infix[i];
+		}
+		else if (infix[i] == '(') {
+			st.push(infix[i]);
+		}
+		else if (infix[i] == ')') {
+			while (st.Top() != '(') {
+				postfix += st.Top();
+				st.pop();
+			}
+			st.pop();
+		}
+		// operator
+		else {
+			while (!st.isEmpty() and (operatorPrec(infix[i]) <= operatorPrec(st.Top()))) {
+				postfix += st.Top();
+				st.pop();
+			}
+			st.push(infix[i]);
+		}
+	}
+	while (!st.isEmpty()) {
+		postfix += st.Top();
+		st.pop();
+	}
+	return postfix;
 }
 //________________________________________________________________
 //2. Longest Valid Parentheses
@@ -137,8 +177,22 @@ int main() {
 //...
 //________________________________________________________________
 //Test cases of Stack problems
-cout<<"Test cases of Stack problems:\n";
-cout<<"====================================================================\n";
+    cout<<"Test cases of Stack problems:\n";
+    cout<<"1.infix to posfix:\n";
+    cout<<"________________________________________________________________\n";
+    string str00 = "a+c-d/y";
+    string str01 = "X^Y/(5*Z)+2";
+    string str02 = "A+B*C+D";
+    string str03 = "(A+B)*(C+D)";
+    cout << "input: " << str00 << endl;
+    cout << "output: " << infixToPostfix(str00) << endl;
+    cout << "input: " << str01 << endl;
+    cout << "output: " << infixToPostfix(str01) << endl;
+    cout << "input: " << str02 << endl;
+    cout << "output: " << infixToPostfix(str02) << endl;
+    cout << "input: " << str03 << endl;
+    cout << "output: " << infixToPostfix(str03) << endl;
+    cout<<"====================================================================\n";
 // 2.Test cases of Longest Valid Parentheses problem
     cout<<"2.Test cases of Longest Valid Parentheses problem:\n";
     cout<<"________________________________________________________________\n";
