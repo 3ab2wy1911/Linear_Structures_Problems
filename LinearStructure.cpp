@@ -265,14 +265,14 @@ public:
     }
 //________________________________________________________________
     void swap(int firstIndex, int secondIndex){
-        node* prevX, *currX, *prevY, *currX;
+        node* prevX, *currX, *prevY , *currY;
         currX = head;
-        while (currX and currX->info != indx1) {
-		prevX = currX;
-		currX = currX->next;
+        while (currX and currX->item != firstIndex) {
+            prevX = currX;
+            currX = currX->next;
         }
-        currY = first;
-        while (currY and currY->info != indx2) {
+        currY = head;
+        while (currY and currY->item != secondIndex) {
             prevY = currY;
             currY = currY -> next;
         }
@@ -284,19 +284,19 @@ public:
         if (prevX != NULL) {
             prevX->next = currY;
         }
-        else first = currY;
+        else head = currY;
         if (prevY != NULL) {
             prevY->next = currX;
         }
         else {
-            first = currX;
+            head = currX;
         }
         // swap next pointers
-        NodeType<Type>* temp = new NodeType<Type>;
+        node* temp = new node;
         temp = currY->next;
         currY->next = currX->next;
         currX->next = temp;
-        }
+    }
 //________________________________________________________________
     bool isExist(type element)
     {
@@ -596,10 +596,74 @@ public:
 
     }
 //________________________________________________________________
-    void swap (int firstItemIdx, int secondItemIdx){
+    void swap(int firstItemIdx, int secondItemIdx) {
+        // First, find the nodes to be swapped using their indices
+        node* first = head ,* second=head;
+        for (int i = 0; i < firstItemIdx and first != NULL; i++) {
+            first = first->next;
+        }
+        for (int i = 0; i < secondItemIdx && second != NULL; i++) {
+            second = second->next;
+        }
 
+        if (first == NULL or second == NULL) {
+            return;
+        }
+
+        if (first == second) {
+            return;
+        }
+
+        node* temp_first_Prev = first->prev;
+        node* temp_first_Next = first->next;
+        node* temp_second_Prev = second->prev;
+        node* temp_second_Next = second->next;
+        if (temp_first_Next == second) {
+            // The nodes are adjacent, so we only need to swap their next and prev pointers
+            first->prev = second;
+            first->next = temp_second_Next;
+            second->prev = temp_first_Prev;
+            second->next = first;
+            if (temp_first_Prev != NULL) {
+                temp_first_Prev->next = second;
+            }
+            if (temp_second_Next != NULL) {
+                temp_second_Next->prev = first;
+            }
+        } else if (temp_second_Next == first) {
+            // The nodes are adjacent, so we only need to swap their next and prev pointers
+            second->prev = first;
+            second->next = temp_first_Next;
+            first->prev = temp_second_Prev;
+            first->next = second;
+            if (temp_second_Prev != NULL) {
+                temp_second_Prev->next = first;
+            }
+            if (temp_first_Next != NULL) {
+                temp_first_Next->prev = second;
+            }
+        } else {
+            // The nodes are not adjacent, so we need to adjust all four pointers
+            first->prev = temp_second_Next;
+            first->next = temp_second_Next;
+            second->prev = temp_first_Prev;
+            second->next = temp_first_Next;
+            if (temp_first_Prev != NULL) {
+                temp_first_Prev->next = second;
+            }
+            if (temp_first_Next != NULL) {
+                temp_first_Next->prev = second;
+            }
+            if (temp_second_Prev != nullptr) {
+                second->next = first;
+            }
+            if (temp_second_Next != nullptr) {
+                temp_second_Next->prev = first;
+            }
+        }
     }
-//________________________________________________________________
+
+    //________________________________________________________________
     void reverse (){
         node* cur = head;
         node* temp = NULL;
@@ -648,6 +712,7 @@ public:
     }
 };
 //============================================================================
+template <typename type>
 class Circular_Linked_List{
 public:
     struct node{
@@ -838,7 +903,7 @@ public:
         cout<<tail->item<<" ]";
     }
 //________________________________________________________________
-    int Circular_Linked_List(){
+    int Size(){
         return length;
     }
 //________________________________________________________________
