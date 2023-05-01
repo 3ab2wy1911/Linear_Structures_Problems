@@ -3,18 +3,44 @@
 using namespace std;
 
 //Problems of LinkedList
-void function1()
-{
-
-}
+//============================================================================
+//1. Combine Nodes Between Zeros
+void function_name(){
+    //Put ur code here and remember Arsenal 3amk
+};
 //________________________________________________________________
-void function2()
-{
+//2. Merge K Sorted Linked Lists
+Single_Linked_List<int>:: node* merge_K_Lists(vector<Single_Linked_List<int> ::node*>& Linked_Lists) {
+    Single_Linked_List<int>::node* head = new Single_Linked_List<int>::node;
+    head->next= NULL;
+    Single_Linked_List<int>::node* tail = new Single_Linked_List<int>::node;
+    tail =head;
+    int k = Linked_Lists.size();
+    bool ck = true;
+    while (ck) {
+        int mini = INT_MAX;
+        int mini_index = -1;
+        ck = false;
+        for (int i = 0; i < k; i++) {
+            if (Linked_Lists[i] != NULL && Linked_Lists[i]->item < mini) {
+                mini = Linked_Lists[i]->item;
+                mini_index = i;
+                ck = true;
+            }
+        }
+        if (ck) {
+            tail->next = Linked_Lists[mini_index];
+            tail = tail->next;
+            Linked_Lists[mini_index] = Linked_Lists[mini_index]->next;
+        }
+    }
+    return head->next;
 }
 //============================================================================
-// Problems of Stack
+//1. Convert the Infix Expression to Postfix Expression
  void function3()
 {
+//    Put ur code here don't forget to change the name of the function ... Milan 3amk hwa we elzamalek.
 }
 //________________________________________________________________
 //2. Longest Valid Parentheses
@@ -33,11 +59,6 @@ void Longest_Valid_Parentheses(string & str)
         }
     }
     cout << n-s.stackSize() << endl;
-}
-//________________________________________________________________
-void function5()
-{
-
 }
 //============================================================================
 // Problems of Queue
@@ -132,13 +153,85 @@ void Queue_sort(Queue<int> &q){
 }
 //============================================================================
 int main() {
-//test cases of function 1
-//test cases of function 2
-//...
+    cout<<"Test cases of Stack problems:\n";
+    cout<<"====================================================================\n";
+//1. Combine Nodes Between Zeros
+    //Put ur test cases here فما حاااااجة.
 //________________________________________________________________
+//2. Merge K Sorted Linked Lists
+    cout<<"Test cases of 2. Merge K Sorted Linked Lists problem:\n";
+    cout<<"________________________________________________________________\n";
+    Single_Linked_List<int>l1,l2,l3,l4,l5,l6;
+    l1.insertAtHead(5);
+    l1.insertAtHead(4);
+    l1.insertAtHead(1);
+    l2.insertAtHead(4);
+    l2.insertAtHead(2);
+    l2.insertAtHead(1);
+    l3.insertAtHead(6);
+    l3.insertAtHead(2);
+    l4.insertAtHead(7);
+    l4.insertAtHead(5);
+    l4.insertAtHead(3);
+    l4.insertAtHead(1);
+    l5.insertAtHead(8);
+    l5.insertAtHead(6);
+    l5.insertAtHead(4);
+    l5.insertAtHead(2);
+    l6.insertAtHead(10);
+    l6.insertAtHead(9);
+    l6.insertAtHead(0);
+//------------------------------------------------------------------
+    cout<<"First test case:\n";
+    cout<<"________________________________________________________________\n";
+    cout<<"First List ==> ";
+    l1.print();
+    cout<<endl;
+    cout<<"Second List ==> ";
+    l2.print();
+    cout<<endl;
+    cout<<"Third List ==> ";
+    l3.print();
+    cout<<endl;
+    cout<<"Lists After Merging ==>";
+    cout<<"[ ";
+    vector <Single_Linked_List<int>::node*> lists = {l1.head,l2.head,l3.head};
+    Single_Linked_List<int>::node* merged_list = merge_K_Lists(lists);
+    while (merged_list) {
+        cout << merged_list->item << " ";
+        merged_list = merged_list->next;
+    }
+    cout<<" ]\n";
+    cout<<"------------------------------------------------------------------\n";
+    cout<<"Second test case:\n";
+    cout<<"________________________________________________________________\n";
+    cout<<"First List ==> ";
+    l4.print();
+    cout<<endl;
+    cout<<"Second List ==> ";
+    l5.print();
+    cout<<endl;
+    cout<<"Third List ==> ";
+    l6.print();
+    cout<<endl;
+    cout<<"Lists After Merging ==>";
+    cout<<"[ ";
+    lists.clear();
+    lists = {l4.head,l5.head,l6.head};
+    merged_list = merge_K_Lists(lists);
+    while (merged_list) {
+        cout << merged_list->item << " ";
+        merged_list = merged_list->next;
+    }
+    cout<<" ]\n";
+    cout<<"====================================================================\n";
+//====================================================================
 //Test cases of Stack problems
 cout<<"Test cases of Stack problems:\n";
 cout<<"====================================================================\n";
+// 1. Convert the Infix Expression to Postfix Expression
+    // put ur test cases here and remember England has only one boss which is Arsenal.
+//________________________________________________________________
 // 2.Test cases of Longest Valid Parentheses problem
     cout<<"2.Test cases of Longest Valid Parentheses problem:\n";
     cout<<"________________________________________________________________\n";

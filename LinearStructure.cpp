@@ -107,19 +107,18 @@ public:
 //================================================================
 template <typename type>
 class Single_Linked_List{
-private:
+public:
     struct node{
         type item;
         node *next;
     };
-    node *head;
-    node *tail;
-    int length;
-public:
     explicit Single_Linked_List(){
         length=0;
         head = tail = NULL;
     }
+    node *head;
+    node *tail;
+    int length;
 //________________________________________________________________
     bool isEmpty(){
         return length==0;
@@ -226,10 +225,16 @@ public:
 //________________________________________________________________
     type retrieveAt(int index)
     {
-        if (isEmpty())
-            throw out_of_range("List is empty");
+        if (isEmpty()){
+            cout<<"List is empty";
+            return -1;
+        }
+        if(index<0 or index > length){
+            cout<<"index out of range";
+            return -1;
+        }
         node *curr=head;
-        for(int i=0;i<=index;i++)
+        for(int i=0;i<index;i++)
         {
             curr=curr->next;
         }
@@ -238,10 +243,16 @@ public:
 //________________________________________________________________
     void replaceAt(type newElement,int index)
     {
-        if (isEmpty())
-            throw out_of_range("List is empty");
+        if (isEmpty()){
+            cout<<"List is empty";
+            return;
+        }
+        if(index<0 or index>length){
+            cout<<"index out of range";
+            return;
+        }
         node *curr=head;
-        for(int i=0;i<=index;i++)
+        for(int i=0;i<index;i++)
         {
             curr=curr->next;
         }
@@ -272,6 +283,8 @@ public:
     }
 //________________________________________________________________
     void print(){
+        if(isEmpty())
+            throw out_of_range("List is empty");
         node *curr=head;
         cout<<"[ ";
         while(curr!=tail)
@@ -434,12 +447,12 @@ public:
 //________________________________________________________________
     type retrieveAt (int index)
     {
-        node *cur = head;
-        if(index<0 and index > length )
-            throw out_of_range("out of index range");
-        if(isEmpty())
+        if(index<0 or index>length)
+            throw out_of_range("index out of range");
+        if (isEmpty())
             throw out_of_range("List is empty");
-        if(index ==0)
+        node *cur = head;
+        if(index == 0)
         {
             return head->item;
         }
