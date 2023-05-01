@@ -140,7 +140,8 @@ public:
         length ++;
     }
 //________________________________________________________________
-    void insertAtTail(type element) {
+    void insertAtTail(type element)
+    {
         node *newNode = new node;
         newNode->item = element;
         if (isEmpty()) {
