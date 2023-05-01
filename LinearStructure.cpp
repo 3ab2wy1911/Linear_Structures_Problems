@@ -615,7 +615,207 @@ public:
 };
 //============================================================================
 class Circular_Linked_List{
-
+public:
+    struct node{
+        type item;
+        node *next;
+    };
+    explicit Circular_Linked_List(){
+        length=0;
+        head = tail = NULL;
+    }
+    node *head;
+    node *tail;
+    int length;
+//________________________________________________________________
+    bool isEmpty(){
+        return length==0;
+    }
+//________________________________________________________________
+    void insertAtHead(type element)
+    {
+        node *newNode = new node;
+        newNode->item = element;
+        if (isEmpty())
+        {
+            head = tail = newNode;
+            newNode->next = NULL;
+        }
+        else {
+            newNode -> next = head;
+            head = newNode;
+        }
+        length ++;
+    }
+//________________________________________________________________
+    void insertAtTail(type element)
+    {
+        node *newNode = new node;
+        newNode->item = element;
+        if (isEmpty()) {
+            insertAtHead(element);
+        } else {
+            tail->next = newNode;
+            newNode->next = head;
+            tail = newNode;
+            length++;
+        }
+    }
+//________________________________________________________________
+    void insertAt(type element , int index)
+    {
+        if (index==0)
+        {
+            insertAtHead(element);
+        }
+        else if (index==length)
+        {
+            insertAtTail(element);
+        }
+        else {
+            node *newNode = new node;
+            newNode->item = element;
+            node *curr = head;
+            for (int i = 0; i < index; i++) {
+                curr=curr->next;
+            }
+            newNode->next = curr->next;
+            curr->next = newNode;
+            length++;
+        }
+    }
+//________________________________________________________________
+    void removeAtHead() {
+        if (isEmpty())
+            throw out_of_range("List is empty");
+        node *newNode = head;
+        head = head->next;
+        delete newNode;
+        length--;
+    }
+//________________________________________________________________
+    void removeAtTail() {
+        if (isEmpty())
+            throw out_of_range("List is empty");
+        node *curr=head;
+        node *newNode = tail;
+        for(int i=0;i<length;i++)
+        {
+            curr=curr->next;
+        }
+        curr->next=NULL;
+        tail =curr;
+        delete newNode;
+        length--;
+    }
+//________________________________________________________________
+    void removeAt (int index){
+        if (isEmpty())
+            throw out_of_range("List is empty");
+        else if(index==0)
+        {
+            removeAtHead();
+        }
+        else if(index==length){
+            removeAtTail();
+        }
+        else{
+            node *curr=head;
+            for(int i=0;i<index;i++)
+            {
+                curr=curr->next;
+            }
+            node *newNode = curr->next;
+            curr->next=curr->next->next;
+            delete newNode;
+            length--;
+        }
+    }
+//________________________________________________________________
+    type retrieveAt(int index)
+    {
+        if (isEmpty()){
+            cout<<"List is empty";
+            return -1;
+        }
+        if(index<0 or index > length){
+            cout<<"index out of range";
+            return -1;
+        }
+        node *curr=head;
+        for(int i=0;i<index;i++)
+        {
+            curr=curr->next;
+        }
+        return curr->item;
+    }
+//________________________________________________________________
+    void replaceAt(type newElement,int index)
+    {
+        if (isEmpty()){
+            cout<<"List is empty";
+            return;
+        }
+        if(index<0 or index>length){
+            cout<<"index out of range";
+            return;
+        }
+        node *curr=head;
+        for(int i=0;i<index;i++)
+        {
+            curr=curr->next;
+        }
+        curr->item = newElement;
+    }
+//________________________________________________________________
+    bool isExist(type element)
+    {
+        node *curr=head;
+        for(int i=0;i<=length;i++)
+        {
+            if(curr->item==element)
+                return true;
+            curr=curr->next;
+        }
+        return false;
+    }
+//________________________________________________________________
+    bool isItemAtEqual(type element,int index){
+        if (isEmpty())
+            throw out_of_range("List is empty");
+        node *curr=head;
+        for(int i=0;i<=index;i++)
+        {
+            curr=curr->next;
+        }
+        return curr->item == element;
+    }
+//________________________________________________________________
+    void print(){
+        //if(isEmpty())
+            //throw out_of_range("List is empty");
+        node *curr=head;
+        cout<<"[ ";
+        while(curr!=tail)
+        {
+            cout<<curr->item<<", ";
+            curr=curr->next;
+        }
+        cout<<tail->item<<" ]";
+    }
+//________________________________________________________________
+    int Circular_Linked_List(){
+        return length;
+    }
+//________________________________________________________________
+    void clear(){
+        length=0;
+        head = tail = NULL;
+    }
+//________________________________________________________________
+    node* returnFirst() {
+		return head;
+	}
 };
 //================================================================
 template<typename type>
