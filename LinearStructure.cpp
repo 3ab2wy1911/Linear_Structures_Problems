@@ -1,3 +1,7 @@
+// Authors: Mohammed 3ab2awy
+// Authors: Omar Mohammad
+// last modification: 1/5/2023
+// Data Structure Assignment II Final Edition :)
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -284,8 +288,8 @@ public:
     }
 //________________________________________________________________
     void print(){
-        if(isEmpty())
-            throw out_of_range("List is empty");
+        //if(isEmpty())
+            //throw out_of_range("List is empty");
         node *curr=head;
         cout<<"[ ";
         while(curr!=tail)
@@ -305,11 +309,14 @@ public:
         head = tail = NULL;
     }
 //________________________________________________________________
+    node* returnFirst() {
+		return head;
+	}
 };
 //================================================================
 template<typename type>
 class Double_Linked_List{
-private:
+public:
     struct node{
         type item;
         node *next , *prev;
@@ -383,11 +390,45 @@ public:
     }
 //________________________________________________________________
     void insertAfter (node *prev_node, int data){
+        if (head == NULL and tail == NULL){
+            cout << "Empty Doubly Linked List!\n";
+            return;
+        }
+        node* newNode = new node;
+        newNode->item = data; // node item to the data recieved
+        newNode->next = NULL;   // next to Null
+        newNode->prev = NULL;   // prev to Null
+        node* current = head;   // to iterate with
+        node* trailCurrent = NULL;
+        // insert after first node in the dll
+        if (prev_node == head){
+            prev_node->next = newNode;
+            newNode->next = prev_node->next;
+            prev_node->next->prev = newNode;
+            newNode->prev = head;
+        }
+        // insert after the last node of the dll
+        else if (prev_node == tail->prev){
+            insertAtTail(data);
+        }
+        // insert in somewhere in the dll
+        else {
+            while(current != NULL){
+                if (trailCurrent == prev_node){
+                    trailCurrent->next = newNode;
+                    newNode->prev = trailCurrent;
+                    newNode->next = current;
+                    current->prev = newNode;
+                }
+
+            }
+            trailCurrent->next = current;
+            current = current->next;
+        }
 
     }
 //________________________________________________________________
-    void removeAtHead ()
-    {
+    void removeAtHead (){
         if (isEmpty())
             throw out_of_range("List is empty");
         if(length==1)
