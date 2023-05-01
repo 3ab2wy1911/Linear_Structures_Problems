@@ -264,27 +264,61 @@ public:
         curr->item = newElement;
     }
 //________________________________________________________________
-    bool isExist(type element)
-    {
-        node *curr=head;
-        for(int i=0;i<=length;i++)
-        {
-            if(curr->item==element)
-                return true;
-            curr=curr->next;
+    void swap(int firstIndex, int secondIndex){
+        node* prevX, *currX, *prevY, *currX;
+        currX = head;
+        while (currX and currX->info != indx1) {
+		prevX = currX;
+		currX = currX->next;
         }
-        return false;
-    }
-//________________________________________________________________
-    bool isItemAtEqual(type element,int index){
-        if (isEmpty())
-            throw out_of_range("List is empty");
-        node *curr=head;
-        for(int i=0;i<=index;i++)
-        {
-            curr=curr->next;
+        currY = first;
+        while (currY and currY->info != indx2) {
+            prevY = currY;
+            currY = currY -> next;
         }
-        return curr->item == element;
+        // if indx1 or indx2 are not in list
+        if (currX == NULL or currY == NULL) {
+            return;
+        }
+
+        if (prevX != NULL) {
+            prevX->next = currY;
+        }
+        else first = currY;
+        if (prevY != NULL) {
+            prevY->next = currX;
+        }
+        else {
+            first = currX;
+        }
+        // swap next pointers
+        NodeType<Type>* temp = new NodeType<Type>;
+        temp = currY->next;
+        currY->next = currX->next;
+        currX->next = temp;
+        }
+    //________________________________________________________________
+        bool isExist(type element)
+        {
+            node *curr=head;
+            for(int i=0;i<=length;i++)
+            {
+                if(curr->item==element)
+                    return true;
+                curr=curr->next;
+            }
+            return false;
+        }
+    //________________________________________________________________
+        bool isItemAtEqual(type element,int index){
+            if (isEmpty())
+                throw out_of_range("List is empty");
+            node *curr=head;
+            for(int i=0;i<=index;i++)
+            {
+                curr=curr->next;
+            }
+            return curr->item == element;
     }
 //________________________________________________________________
     void print(){
