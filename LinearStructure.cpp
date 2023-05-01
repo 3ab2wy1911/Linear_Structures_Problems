@@ -597,7 +597,6 @@ public:
     }
 //________________________________________________________________
     void swap(int firstItemIdx, int secondItemIdx) {
-        // First, find the nodes to be swapped using their indices
         node* first = head ,* second=head;
         for (int i = 0; i < firstItemIdx and first != NULL; i++) {
             first = first->next;
@@ -619,7 +618,6 @@ public:
         node* temp_second_Prev = second->prev;
         node* temp_second_Next = second->next;
         if (temp_first_Next == second) {
-            // The nodes are adjacent, so we only need to swap their next and prev pointers
             first->prev = second;
             first->next = temp_second_Next;
             second->prev = temp_first_Prev;
@@ -631,7 +629,6 @@ public:
                 temp_second_Next->prev = first;
             }
         } else if (temp_second_Next == first) {
-            // The nodes are adjacent, so we only need to swap their next and prev pointers
             second->prev = first;
             second->next = temp_first_Next;
             first->prev = temp_second_Prev;
@@ -643,7 +640,6 @@ public:
                 temp_first_Next->prev = second;
             }
         } else {
-            // The nodes are not adjacent, so we need to adjust all four pointers
             first->prev = temp_second_Next;
             first->next = temp_second_Next;
             second->prev = temp_first_Prev;
