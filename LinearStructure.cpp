@@ -297,9 +297,9 @@ public:
         currY->next = currX->next;
         currX->next = temp;
         }
-    //________________________________________________________________
-        bool isExist(type element)
-        {
+//________________________________________________________________
+    bool isExist(type element)
+    {
             node *curr=head;
             for(int i=0;i<=length;i++)
             {
@@ -309,8 +309,8 @@ public:
             }
             return false;
         }
-    //________________________________________________________________
-        bool isItemAtEqual(type element,int index){
+//________________________________________________________________
+    bool isItemAtEqual(type element,int index){
             if (isEmpty())
                 throw out_of_range("List is empty");
             node *curr=head;
