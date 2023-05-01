@@ -1,3 +1,7 @@
+// Authors: Mohammed 3ab2awy
+// Authors: Omar Mohammad
+// last modification: 1/5/2023
+// Data Structure Assignment II Final Edition :)
 #include <bits/stdc++.h>
 #include "LinearStructure.cpp"
 using namespace std;
@@ -5,9 +9,43 @@ using namespace std;
 //Problems of LinkedList
 //============================================================================
 //1. Combine Nodes Between Zeros
-void function_name(){
-    //Put ur code here and remember Arsenal 3amk
-};
+void CombineNodes(Single_Linked_List<int>::node* first) {
+	Single_Linked_List<int> new_sll;
+	bool start, end; start = end = false;// start and end
+	Single_Linked_List<int>::node* st = NULL, * nd = NULL; // two pointers to start and end
+	Single_Linked_List<int>::node* newNode = new Single_Linked_List<int>::node; // to iterate
+	newNode = first;
+	while (newNode != NULL) {
+		// if it is the first zero in the list
+		if (newNode->item == 0 and start == false and end == false) {
+			st = newNode;
+			start = true;
+		}
+		// if it is the second zero(end)
+		else if (newNode->item == 0 and end == false and start == true) {
+			nd = newNode;
+			end = true;
+		}
+		// if we found the start and end of the list (we found a range)
+		if (start == true and end == true) {
+			int sum = 0;
+			Single_Linked_List<int>::node* newNode1 = new Single_Linked_List<int>::node; // to iterate within the start and end
+			newNode1 = st->next;
+			// while the end is not reached
+			while (newNode1 != nd) {
+				//cout << newNode1->info << " ";
+				sum += newNode1->item;
+				newNode1 = newNode1->next;
+			}
+			new_sll.insertAtTail(sum);
+			st = nd; // make the end of the range is the start of the next range
+			start = true; // mark the start of the next range to be true
+			end = false; // mark the end of the next range to be false
+		}
+		newNode = newNode->next; // iterate through the original ll
+	}
+	new_sll.print();
+}
 //________________________________________________________________
 //2. Merge K Sorted Linked Lists
 Single_Linked_List<int>:: node* merge_K_Lists(vector<Single_Linked_List<int> ::node*>& Linked_Lists) {
@@ -38,9 +76,47 @@ Single_Linked_List<int>:: node* merge_K_Lists(vector<Single_Linked_List<int> ::n
 }
 //============================================================================
 //1. Convert the Infix Expression to Postfix Expression
- void function3()
-{
-//    Put ur code here don't forget to change the name of the function ... Milan 3amk hwa we elzamalek.
+int operatorPrec(char op) {
+	if (op == '^')
+		return 3;
+	else if (op == '/' or op == '*')
+		return 2;
+	else if (op == '+' or op == '-')
+		return 1;
+	else
+		return 0;
+}
+string infixToPostfix(string infix) {
+	Stack<char> st;
+	string postfix = "";
+	for (int i = 0; i < infix.size(); i++) {
+		if (isalpha(infix[i]) or (infix[i] >= '0' and infix[i] <= '9')) {
+			postfix += infix[i];
+		}
+		else if (infix[i] == '(') {
+			st.push(infix[i]);
+		}
+		else if (infix[i] == ')') {
+			while (st.Top() != '(') {
+				postfix += st.Top();
+				st.pop();
+			}
+			st.pop();
+		}
+		// operator
+		else {
+			while (!st.isEmpty() and (operatorPrec(infix[i]) <= operatorPrec(st.Top()))) {
+				postfix += st.Top();
+				st.pop();
+			}
+			st.push(infix[i]);
+		}
+	}
+	while (!st.isEmpty()) {
+		postfix += st.Top();
+		st.pop();
+	}
+	return postfix;
 }
 //________________________________________________________________
 //2. Longest Valid Parentheses
@@ -153,10 +229,33 @@ void Queue_sort(Queue<int> &q){
 }
 //============================================================================
 int main() {
-    cout<<"Test cases of Stack problems:\n";
+    cout<<"Test cases of 1. Combine Nodes Between Zero problem:\n";
     cout<<"====================================================================\n";
 //1. Combine Nodes Between Zeros
-    //Put ur test cases here فما حاااااجة.
+    Single_Linked_List<int>ll;
+	cout << "tc 1: [0, 3, 1, 0, 4, 5, 2, 0] ==> ";
+	ll.insertAtTail(0);
+	ll.insertAtTail(3);
+	ll.insertAtTail(1);
+	ll.insertAtTail(0);
+	ll.insertAtTail(4);
+	ll.insertAtTail(5);
+	ll.insertAtTail(2);
+	ll.insertAtTail(0);
+	CombineNodes(ll.returnFirst());
+	cout << endl;
+	ll.clear();
+	cout << "tc 2: : [0, 1, 0, 3, 0, 2, 2, 0] ==> " ;
+	ll.insertAtTail(0);
+	ll.insertAtTail(1);
+	ll.insertAtTail(0);
+	ll.insertAtTail(3);
+	ll.insertAtTail(0);
+	ll.insertAtTail(2);
+	ll.insertAtTail(2);
+	ll.insertAtTail(0);
+	CombineNodes(ll.returnFirst());
+	cout <<  "\n====================================================================\n";
 //________________________________________________________________
 //2. Merge K Sorted Linked Lists
     cout<<"Test cases of 2. Merge K Sorted Linked Lists problem:\n";
@@ -230,7 +329,24 @@ int main() {
 cout<<"Test cases of Stack problems:\n";
 cout<<"====================================================================\n";
 // 1. Convert the Infix Expression to Postfix Expression
-    // put ur test cases here and remember England has only one boss which is Arsenal.
+    cout<<"1.Test cases of Infix Expression to Postfix Expression:\n";
+    cout<<"________________________________________________________________\n";
+    string str00 = "a+c-d/y";
+    string str01 = "X^Y/(5*Z)+2";
+    string str02 = "A+B*C+D";
+    string str03 = "(A+B)*(C+D)";
+    cout << "input ==>" << str00 << endl;
+    cout << "output ==> " << infixToPostfix(str00) << endl;
+    cout << '\n';
+    cout << "input ==> " << str01 << endl;
+    cout << "output ==> " << infixToPostfix(str01) << endl;
+    cout << '\n';
+    cout << "input ==> " << str02 << endl;
+    cout << "output ==> " << infixToPostfix(str02) << endl;
+    cout << '\n';
+    cout << "input ==> " << str03 << endl;
+    cout << "output ==> " << infixToPostfix(str03) << endl;
+    cout<<"====================================================================\n";
 //________________________________________________________________
 // 2.Test cases of Longest Valid Parentheses problem
     cout<<"2.Test cases of Longest Valid Parentheses problem:\n";
